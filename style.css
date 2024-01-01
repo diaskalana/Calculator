@@ -39,7 +39,7 @@ button:active {
 }
 .calculator {
   background-color: black;
-  width: 400px;
+  width: 350px;
   padding: 20px;
   border-radius: 10px;
   gap: 20px;
@@ -60,6 +60,7 @@ button:active {
   border-radius: 10px;
   margin: 0;
   padding: 5px;
+  word-break: break-all;
 
   /* From https://css.glass */
   background: rgba(150, 209, 194, 1);
