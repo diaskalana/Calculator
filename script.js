@@ -138,7 +138,6 @@ regularButtons.addEventListener('click', (event) => {
 
 // To add keyboard support
 document.addEventListener('keydown', (event) => {
-    console.log(event.key)
     const numList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     if (numSet.length < 8) {
 
