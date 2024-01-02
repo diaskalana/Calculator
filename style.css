@@ -83,7 +83,7 @@ button:active {
   left: 0;
   padding: 7px;
   height: 10px;
-  background-color: #96d1c2;
+  background-color: transparent;
   /* border-radius: 10px 0 10px 0; */
   font-size: 0.7rem;
   font-family: Verdana, sans-serif;
