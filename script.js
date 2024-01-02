@@ -43,7 +43,6 @@ function initOperation(op) {
     numSet.splice(0, numSet.length)
     numSet[0] = 0
     addToScreen(numSet)
-    // console.log('check')
     operation = op
     calScreen.appendChild(operatorElement).textContent = op
 }
