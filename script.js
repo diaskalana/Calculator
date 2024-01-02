@@ -136,3 +136,89 @@ regularButtons.addEventListener('click', (event) => {
     }
 
 })
+
+// To add keyboard support
+document.addEventListener('keydown', (event) => {
+    console.log(event.key)
+    const numList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    if (numSet.length < 8) {
+
+        if (numList.includes(Number(event.key))) {
+            if (numSet[0] == 0 && numSet[1] == ".") {
+                // Do nothing
+            } else if (numSet[0] == 0) {
+                numSet.pop()
+            }
+            numSet.push(event.key)
+        }
+        if (event.key == '.') {
+            if (!numSet.includes('.')) {
+                numSet.push('.')
+            }
+        }
+        if (result != 0) {
+            numSet.splice(0, numSet.length)
+            numSet[0] = 0
+            result = 0
+
+        }
+    } else if (numList.includes(Number(event.key))) {
+        alert("The maximum input limit has been reached!")
+    }
+    addToScreen(numSet)
+
+    if (event.key === '/') {
+        initOperation('Division')
+
+    } else if (event.key === '*') {
+        initOperation('Multiplication')
+    } else if (event.key === '+') {
+        initOperation('Addition')
+    } else if (event.key === '-') {
+        initOperation('Subtraction')
+    } else if (event.key === '=') {
+
+        if (operation == 'Division') {
+            if (numSet[0] != 0) {
+                result = convertToNumber(numSetTwo) / convertToNumber(numSet)
+                displayResult(result)
+            } else {
+                alert("Can't divide by 0!")
+            }
+        } else if (operation == 'Multiplication') {
+            result = convertToNumber(numSetTwo) * convertToNumber(numSet)
+            displayResult(result)
+
+        } else if (operation == 'Addition') {
+            result = convertToNumber(numSetTwo) + convertToNumber(numSet)
+            displayResult(result)
+        } else if (operation == 'Subtraction') {
+            result = convertToNumber(numSetTwo) - convertToNumber(numSet)
+            displayResult(result)
+        }
+        operation = null
+
+    }
+
+    if (event.key == "Backspace") {
+        if (numSet.length == 1) {
+            numSet[0] = 0
+            addToScreen(numSet)
+
+        }
+        if (calScreen.textContent != 0) {
+            numSet.pop()
+        }
+        if (result != 0) {
+            numSet.splice(0, numSet.length)
+            numSet[0] = 0
+            result = 0
+
+        }
+        addToScreen(numSet)
+    } else if (event.key == "Escape" || event.key == "Delete") {
+        numSet.splice(0, numSet.length)
+        numSet[0] = 0
+        addToScreen(numSet)
+    }
+})
