@@ -9,11 +9,17 @@ calScreen.textContent = 0;
 const numSet = [0]
 let numSetTwo = []
 let result = 0;
-let operation;
+let operation = null;
+const operatorElement = document.createElement('span')
+operatorElement.classList.add('operator')
 
 // To display to screen
 function addToScreen(array) {
     calScreen.textContent = array.join('')
+    if (operation != null) {
+        calScreen.appendChild(operatorElement).textContent = operation
+
+    }
 }
 
 function convertToNumber(array) {
@@ -39,6 +45,7 @@ function initOperation(op) {
     addToScreen(numSet)
     // console.log('check')
     operation = op
+    calScreen.appendChild(operatorElement).textContent = op
 }
 
 // To enable delete function
@@ -84,53 +91,47 @@ regularButtons.addEventListener('click', (event) => {
                 numSet.push('.')
             }
         }
+        if (result != 0) {
+            numSet.splice(0, numSet.length)
+            numSet[0] = 0
+            result = 0
+
+        }
     } else if (event.target.id.startsWith('num')) {
         alert("The maximum input limit has been reached!")
     }
     addToScreen(numSet)
 
     if (event.target.id === 'divide') {
-        initOperation('divide')
+        initOperation('Division')
 
-    }
+    } else if (event.target.id === 'multiply') {
+        initOperation('Multiplication')
+    } else if (event.target.id === 'plus') {
+        initOperation('Addition')
+    } else if (event.target.id === 'minus') {
+        initOperation('Subtraction')
+    } else if (event.target.id === 'equal') {
 
-    if (event.target.id === 'multiply') {
-
-        initOperation('multiply')
-
-    }
-
-    if (event.target.id === 'plus') {
-        initOperation('plus')
-
-    }
-
-    if (event.target.id === 'minus') {
-        initOperation('minus')
-
-
-    }
-
-    if (event.target.id === 'equal') {
-
-        if (operation == 'divide') {
+        if (operation == 'Division') {
             if (numSet[0] != 0) {
                 result = convertToNumber(numSetTwo) / convertToNumber(numSet)
                 displayResult(result)
             } else {
                 alert("Can't divide by 0!")
             }
-        } else if (operation == 'multiply') {
+        } else if (operation == 'Multiplication') {
             result = convertToNumber(numSetTwo) * convertToNumber(numSet)
             displayResult(result)
 
-        } else if (operation == 'plus') {
+        } else if (operation == 'Addition') {
             result = convertToNumber(numSetTwo) + convertToNumber(numSet)
             displayResult(result)
-        } else if (operation == 'minus') {
+        } else if (operation == 'Subtraction') {
             result = convertToNumber(numSetTwo) - convertToNumber(numSet)
             displayResult(result)
         }
+        operation = null
 
     }
 
