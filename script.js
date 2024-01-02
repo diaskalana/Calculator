@@ -6,9 +6,9 @@ const deleteBtn = document.querySelector('#deleteBtn')
 
 year.textContent = new Date().getFullYear();
 calScreen.textContent = 0;
-const numSet = []
+const numSet = [0]
 let numSetTwo = []
-let result;
+let result = 0;
 let operation;
 
 // To display to screen
@@ -32,6 +32,15 @@ function displayResult(res) {
     calScreen.textContent = res;
 }
 
+function initOperation(op) {
+    numSetTwo = [...numSet]
+    numSet.splice(0, numSet.length)
+    numSet[0] = 0
+    addToScreen(numSet)
+    // console.log('check')
+    operation = op
+}
+
 // To enable delete function
 deleteBtn.addEventListener('click', () => {
     if (numSet.length == 1) {
@@ -41,6 +50,12 @@ deleteBtn.addEventListener('click', () => {
     }
     if (calScreen.textContent != 0) {
         numSet.pop()
+    }
+    if (result != 0) {
+        numSet.splice(0, numSet.length)
+        numSet[0] = 0
+        result = 0
+
     }
     addToScreen(numSet)
 })
@@ -57,7 +72,9 @@ regularButtons.addEventListener('click', (event) => {
 
     if (numSet.length < 8) {
         if (event.target.id.startsWith('num')) {
-            if (numSet[0] == 0) {
+            if (numSet[0] == 0 && numSet[1] == ".") {
+                // Do nothing
+            } else if (numSet[0] == 0) {
                 numSet.pop()
             }
             numSet.push(event.target.textContent)
@@ -67,73 +84,43 @@ regularButtons.addEventListener('click', (event) => {
                 numSet.push('.')
             }
         }
-    }
-    else {
+    } else if (event.target.id.startsWith('num')) {
         alert("The maximum input limit has been reached!")
     }
     addToScreen(numSet)
 
     if (event.target.id === 'divide') {
-
-        if (numSet[0] != 0) {
-            numSetTwo = [...numSet]
-            numSet.splice(0, numSet.length)
-            numSet[0] = 0
-            addToScreen(numSet)
-            // console.log('check')
-            operation = 'divide'
-        }
+        initOperation('divide')
 
     }
 
     if (event.target.id === 'multiply') {
 
-        if (numSet[0] != 0) {
-            numSetTwo = [...numSet]
-            numSet.splice(0, numSet.length)
-            numSet[0] = 0
-            addToScreen(numSet)
-            operation = 'multiply'
-        }
+        initOperation('multiply')
 
     }
 
     if (event.target.id === 'plus') {
-
-        if (numSet[0] != 0) {
-            numSetTwo = [...numSet]
-            numSet.splice(0, numSet.length)
-            numSet[0] = 0
-            addToScreen(numSet)
-            operation = 'plus'
-        }
+        initOperation('plus')
 
     }
 
     if (event.target.id === 'minus') {
+        initOperation('minus')
 
-        if (numSet[0] != 0) {
-            numSetTwo = [...numSet]
-            numSet.splice(0, numSet.length)
-            numSet[0] = 0
-            addToScreen(numSet)
-            operation = 'minus'
-        }
 
     }
 
     if (event.target.id === 'equal') {
-        if (numSet[0] != 0) {
-            if (operation == 'divide') {
-                result = convertToNumber(numSetTwo) / convertToNumber(numSet)
-                // console.log(convertToNumber(numSetTwo), convertToNumber(numSet))
-                displayResult(result)
-            }
-        } else {
-            alert("Can't divide by 0!")
-        }
 
-        if (operation == 'multiply') {
+        if (operation == 'divide') {
+            if (numSet[0] != 0) {
+                result = convertToNumber(numSetTwo) / convertToNumber(numSet)
+                displayResult(result)
+            } else {
+                alert("Can't divide by 0!")
+            }
+        } else if (operation == 'multiply') {
             result = convertToNumber(numSetTwo) * convertToNumber(numSet)
             displayResult(result)
 
